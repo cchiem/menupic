@@ -82,7 +82,7 @@ export async function POST(request: Request) {
             console.log("processing image for:", item.name);
             const response = await together.images.create({
                 prompt: `A picture of food for a menu, hyper realistic, highly detailed, ${item.name}, ${item.description}.`,
-                model: "black-forest-labs/FLUX.1-schnell-Free",
+                model: "black-forest-labs/FLUX.1-schnell",
                 width: 1024,
                 height: 768,
                 steps: 4,
@@ -93,7 +93,7 @@ export async function POST(request: Request) {
         });
         await Promise.all(imagePromises);
 
-        return Response.json({ menu: menuItemsJSON });
+        return Response.json({ success: "completed", menu: menuItemsJSON });
     } catch (error) {
         return Response.json({ success: "failed", message: error });
     }

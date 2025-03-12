@@ -1,11 +1,21 @@
 "use client";
-
 import { useState } from "react";
 import { useS3Upload } from "next-s3-upload";
 import Dropzone from "react-dropzone";
 import Image from "next/image";
-import { MenuGrid } from "./components/MenuGrid";
 import { ClipLoader } from "react-spinners";
+import { MenuGrid } from "@/components/MenuGrid";
+import {
+    ImageIcon,
+    Github,
+    Upload,
+    Camera,
+    ChevronRight,
+    ArrowDownCircle,
+    Utensils,
+} from "lucide-react";
+import { BiLogoLinkedin } from "react-icons/bi";
+import { CiForkAndKnife } from "react-icons/ci";
 
 export interface MenuItem {
     name: string;
@@ -48,7 +58,7 @@ export default function Home() {
             } else {
                 setStatus("created");
                 setParsedMenu(json.menu);
-                console.log(json);
+                console.log(json.error.error.message);
             }
         } catch (error) {
             console.error("Error during upload or parsing:", error);
@@ -57,11 +67,75 @@ export default function Home() {
     };
 
     return (
-        <div className="min-h-screen bg-background">
-            <main className="container mx-auto px-4 py-8">
+        <div className="min-h-screen bg-background relative overflow-hidden">
+            {/* Background decorative elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {/* Gradient overlay */}
+
+                {/* Food image decorations */}
+                <div className="absolute top-20 right-[5%] w-40 h-100 overflow-hidden opacity-80 rotate-6 blur-sm hidden md:block">
+                    <Image
+                        src="/menu.jpg"
+                        alt="Food decoration"
+                        width={160}
+                        height={160}
+                        className="object-cover"
+                    />
+                </div>
+                <div className="absolute bottom-40 left-[10%] w-32 h-100 overflow-hidden opacity-80 -rotate-12 blur-sm hidden md:block">
+                    <Image
+                        src="/menu.jpg"
+                        alt="Food decoration"
+                        width={128}
+                        height={128}
+                        className="object-cover"
+                    />
+                </div>
+                <div className="absolute top-1/2 left-[60%] w-36 h-100 overflow-hidden opacity-80 rotate-12 blur-sm hidden md:block">
+                    <Image
+                        src="/menu.jpg"
+                        alt="Food decoration"
+                        width={144}
+                        height={144}
+                        className="object-cover"
+                    />
+                </div>
+            </div>
+            <header className="container mx-auto py-4 px-4 flex justify-between items-center relative z-10">
+                <div className="flex items-center gap-2">
+                    <div className="bg-card p-1.5 rounded-full shadow-sm">
+                        <CiForkAndKnife className="h-6 w-6 text-primary" />
+                    </div>
+                    <h1 className="text-xl font-bold">SnapMenu</h1>
+                </div>
+
+                {/* Social Links */}
+                <div className="flex items-center gap-2">
+                    <a
+                        href="https://www.linkedin.com/in/chris-chiem-uoa/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center w-10 h-10 rounded-full bg-card border border-border shadow-sm hover:bg-secondary transition-colors"
+                        aria-label="LinkedIn"
+                    >
+                        <BiLogoLinkedin size={20} />
+                    </a>
+
+                    <a
+                        href="https://github.com/cchiem"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center w-10 h-10 rounded-full bg-card border border-border shadow-sm hover:bg-secondary transition-colors"
+                        aria-label="GitHub"
+                    >
+                        <Github className="h-5 w-5 text-primary" />
+                    </a>
+                </div>
+            </header>
+            <main className="container mx-auto px-4 py-8 relative z-10">
                 <div className="flex justify-center mb-8">
-                    <div className="flex items-center px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
-                        100% free and powered by{" "}
+                    <div className="flex items-center px-4 py-1.5 rounded-full bg-primary/10 backdrop-blur-sm text-primary text-sm font-medium shadow-sm">
+                        100% free and powered by
                         <span className="font-bold ml-1">AI</span>
                     </div>
                 </div>
@@ -95,7 +169,7 @@ export default function Home() {
                                 isDragAccept,
                             }) => (
                                 <div
-                                    className={`border-2 border-dashed p-8 rounded-[--radius-lg] flex flex-col items-center justify-center transition-all ${
+                                    className={`border-2 border-dashed p-8 rounded-[2rem] flex flex-col items-center justify-center transition-all shadow-lg bg-card/80 backdrop-blur-sm ${
                                         isDragAccept
                                             ? "border-primary bg-primary/5"
                                             : "border-border"
@@ -104,28 +178,8 @@ export default function Home() {
                                 >
                                     <input {...getInputProps()} />
 
-                                    <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mb-6">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            className="h-10 w-10 text-muted-foreground"
-                                        >
-                                            <rect
-                                                width="18"
-                                                height="18"
-                                                x="3"
-                                                y="3"
-                                                rx="2"
-                                                ry="2"
-                                            />
-                                            <circle cx="9" cy="9" r="2" />
-                                            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-                                        </svg>
+                                    <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mb-6 shadow-inner">
+                                        <ImageIcon className="h-10 w-10 text-muted-foreground" />
                                     </div>
 
                                     <h3 className="text-xl font-medium mb-2">
@@ -137,43 +191,13 @@ export default function Home() {
                                     </p>
 
                                     <div className="flex flex-wrap gap-3 justify-center">
-                                        <button className="flex items-center gap-2 px-4 py-2 rounded-[--radius] bg-primary text-primary-foreground font-medium hover:bg-primary/90">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="h-4 w-4"
-                                            >
-                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                                <polyline points="17 8 12 3 7 8" />
-                                                <line
-                                                    x1="12"
-                                                    x2="12"
-                                                    y1="3"
-                                                    y2="15"
-                                                />
-                                            </svg>
+                                        <button className="flex items-center gap-2 px-4 py-2 rounded-[--radius-xl] bg-primary text-primary-foreground font-medium hover:bg-primary/90 shadow-md transition-all">
+                                            <Upload className="h-4 w-4" />
                                             <span>Upload Image</span>
                                         </button>
 
-                                        <button className="flex items-center gap-2 px-4 py-2 rounded-[--radius] border border-border bg-background text-foreground font-medium hover:bg-secondary">
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="h-4 w-4"
-                                            >
-                                                <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
-                                                <circle cx="12" cy="13" r="3" />
-                                            </svg>
+                                        <button className="flex items-center gap-2 px-4 py-2 rounded-[--radius-xl] border border-border bg-card text-foreground font-medium hover:bg-secondary shadow-md transition-all">
+                                            <Camera className="h-4 w-4" />
                                             <span>Take a Picture</span>
                                         </button>
                                     </div>
@@ -184,7 +208,7 @@ export default function Home() {
 
                     {menuUrl && status !== "initial" && (
                         <div className="my-10 mx-auto flex flex-col items-center">
-                            <div className="p-4 border border-border rounded-[--radius-lg] shadow-md bg-card">
+                            <div className="p-4 border border-border rounded-[2rem] shadow-lg bg-card/80 backdrop-blur-sm">
                                 <div className="font-medium text-center mb-2">
                                     Uploaded Menu
                                 </div>
@@ -193,7 +217,7 @@ export default function Home() {
                                     height={400}
                                     src={menuUrl || "/placeholder.svg"}
                                     alt="Menu"
-                                    className="rounded-[--radius] object-contain max-h-[400px] w-auto"
+                                    className="rounded-[1.5rem] object-contain max-h-[400px] w-auto"
                                 />
                             </div>
                         </div>
@@ -203,21 +227,23 @@ export default function Home() {
                 <div className="max-w-5xl mx-auto">
                     {status === "parsing" && (
                         <div className="flex flex-col items-center justify-center py-12">
-                            <ClipLoader
-                                color="var(--primary)"
-                                loading={status === "parsing"}
-                                size={60}
-                                aria-label="Loading Spinner"
-                                data-testid="loader"
-                            />
-                            <p className="mt-4 text-muted-foreground">
-                                Analyzing your menu with AI...
-                            </p>
+                            <div className="p-8 rounded-[2rem] bg-card/80 backdrop-blur-sm shadow-lg flex flex-col items-center">
+                                <ClipLoader
+                                    color="var(--primary)"
+                                    loading={status === "parsing"}
+                                    size={60}
+                                    aria-label="Loading Spinner"
+                                    data-testid="loader"
+                                />
+                                <p className="mt-4 text-muted-foreground">
+                                    Analyzing your menu with AI...
+                                </p>
+                            </div>
                         </div>
                     )}
 
                     {status === "failed" && (
-                        <div className="p-6 border border-destructive bg-destructive/5 rounded-[--radius-lg] text-center">
+                        <div className="p-8 border border-destructive bg-destructive/5 backdrop-blur-sm rounded-[2rem] text-center shadow-lg">
                             <h3 className="text-xl font-medium mb-2 text-destructive">
                                 Processing Failed
                             </h3>
@@ -227,21 +253,9 @@ export default function Home() {
                             </p>
                             <button
                                 onClick={() => setStatus("initial")}
-                                className="flex items-center gap-2 px-4 py-2 mx-auto rounded-[--radius] border border-border bg-background text-foreground font-medium hover:bg-secondary"
+                                className="flex items-center gap-2 px-4 py-2 mx-auto rounded-[--radius-xl] border border-border bg-card text-foreground font-medium hover:bg-secondary shadow-md transition-all"
                             >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="h-4 w-4"
-                                >
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M16 12l-4 4-4-4M12 8v7" />
-                                </svg>
+                                <ArrowDownCircle className="h-4 w-4" />
                                 <span>Try Again</span>
                             </button>
                         </div>
@@ -249,21 +263,8 @@ export default function Home() {
 
                     {parsedMenu.length > 0 && (
                         <div className="mt-10">
-                            <div className="flex items-center gap-3 mb-6">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="h-8 w-8 text-primary"
-                                >
-                                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
-                                    <path d="M7 2v20" />
-                                    <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
-                                </svg>
+                            <div className="flex items-center gap-3 mb-6 p-4 rounded-sm bg-card/80 backdrop-blur-sm shadow-md">
+                                <Utensils className="h-8 w-8 text-primary" />
                                 <h2 className="text-3xl font-bold">
                                     Menu – {parsedMenu.length} dishes detected
                                 </h2>
@@ -275,22 +276,9 @@ export default function Home() {
 
                 {status === "initial" && (
                     <div className="mt-12 max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="p-6 border border-border rounded-[--radius-lg] bg-card flex flex-col items-center text-center">
-                            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="h-6 w-6 text-primary"
-                                >
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                    <polyline points="17 8 12 3 7 8" />
-                                    <line x1="12" x2="12" y1="3" y2="15" />
-                                </svg>
+                        <div className="p-6 border border-border rounded-[2rem] bg-card/80 backdrop-blur-sm flex flex-col items-center text-center shadow-md hover:shadow-lg transition-all">
+                            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 shadow-inner">
+                                <Upload className="h-6 w-6 text-primary" />
                             </div>
                             <h3 className="font-medium mb-2">Upload Menu</h3>
                             <p className="text-sm text-muted-foreground">
@@ -298,29 +286,9 @@ export default function Home() {
                             </p>
                         </div>
 
-                        <div className="p-6 border border-border rounded-[--radius-lg] bg-card flex flex-col items-center text-center">
-                            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="h-6 w-6 text-primary"
-                                >
-                                    <rect
-                                        width="18"
-                                        height="18"
-                                        x="3"
-                                        y="3"
-                                        rx="2"
-                                        ry="2"
-                                    />
-                                    <circle cx="9" cy="9" r="2" />
-                                    <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-                                </svg>
+                        <div className="p-6 border border-border rounded-[2rem] bg-card/80 backdrop-blur-sm flex flex-col items-center text-center shadow-md hover:shadow-lg transition-all">
+                            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 shadow-inner">
+                                <ImageIcon className="h-6 w-6 text-primary" />
                             </div>
                             <h3 className="font-medium mb-2">AI Processing</h3>
                             <p className="text-sm text-muted-foreground">
@@ -328,20 +296,9 @@ export default function Home() {
                             </p>
                         </div>
 
-                        <div className="p-6 border border-border rounded-[--radius-lg] bg-card flex flex-col items-center text-center">
-                            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="h-6 w-6 text-primary"
-                                >
-                                    <polyline points="9 18 15 12 9 6" />
-                                </svg>
+                        <div className="p-6 border border-border rounded-[2rem] bg-card/80 backdrop-blur-sm flex flex-col items-center text-center shadow-md hover:shadow-lg transition-all">
+                            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 shadow-inner">
+                                <ChevronRight className="h-6 w-6 text-primary" />
                             </div>
                             <h3 className="font-medium mb-2">Make Decisions</h3>
                             <p className="text-sm text-muted-foreground">
@@ -352,9 +309,9 @@ export default function Home() {
                 )}
             </main>
 
-            <footer className="container mx-auto py-6 px-4 text-center text-sm text-muted-foreground">
-                © {new Date().getFullYear()} PicMenu.co — Helping you visualize
-                your food choices
+            <footer className="container border-t-2 border-gray-200 mx-auto py-6 px-4 text-center text-sm text-muted-foreground relative z-10">
+                Created by <span className="underline">Chris Chiem</span>.
+                Powered by TogetherAI
             </footer>
         </div>
     );

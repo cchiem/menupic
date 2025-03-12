@@ -12,7 +12,7 @@ export const MenuGrid: React.FC<MenuGridProps> = ({ items }) => {
             {items.map((item, index) => (
                 <div
                     key={index}
-                    className="p-4 border border-border rounded-[--radius-lg] bg-card"
+                    className="p-4 border border-border rounded-sm bg-card"
                 >
                     <div className="flex flex-col h-full">
                         <div className="relative w-full h-48 mb-4">
