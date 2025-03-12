@@ -4,15 +4,6 @@
 
 A web app that generates high-quality AI images for restaurant menu items from a simple photo of the menu.
 
-## 🚀 Features
-
--   📸 Upload an image of a restaurant menu
--   🔍 Extract menu items using **Llama 3.2 Vision 90B** (Together AI)
--   📄 Convert extracted text into structured JSON using **Llama 3.1 8B** (Together AI)
--   🎨 Generate realistic dish images with **Flux Schnell** (Together AI)
--   ☁️ Store generated images securely in **AWS S3**
--   🌐 Built with **Next.js (TypeScript), Shadcn, and Tailwind CSS** for a modern UI
-
 ## 🛠 Tech Stack
 
 -   **Frontend:** React, Next.js, TypeScript, Shadcn, Tailwind CSS
