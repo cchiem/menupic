@@ -303,7 +303,7 @@ export default function Home() {
                             </div>
                             <h3 className="font-medium mb-2">AI Processing</h3>
                             <p className="text-sm text-muted-foreground">
-                                Our AI identifies and visualizes each dish
+                                TogetherAI identifies and visualizes each dish
                             </p>
                         </div>
 
