@@ -87,7 +87,8 @@ export async function POST(request: Request) {
 
                 response_format: { type: "json_object", schema: jsonSchema },
             });
-            // @ts-expect-error
+            // @ts-expect-error: just need to see what happens in deployment
+
             extractedData = JSON.parse(extract?.choices?.[0]?.message?.content);
             console.log("Extracted Menu JSON:", extractedData);
         } catch (error) {
