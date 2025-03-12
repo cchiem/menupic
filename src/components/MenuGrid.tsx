@@ -38,7 +38,7 @@ export const MenuGrid: React.FC<MenuGridProps> = ({ items }) => {
                         </p>
                         <div className="mt-auto">
                             <span className="text-primary font-medium">
-                                ${item.price}
+                                {item.price}
                             </span>
                         </div>
                     </div>
