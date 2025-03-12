@@ -1,37 +1,49 @@
-import { MenuItem } from "@/app/page";
+import type React from "react";
+import type { MenuItem } from "@/app/page";
 import Image from "next/image";
 
 interface MenuGridProps {
     items: MenuItem[];
 }
 
-export function MenuGrid({ items }: MenuGridProps) {
+export const MenuGrid: React.FC<MenuGridProps> = ({ items }) => {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {items.map((item) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {items.map((item, index) => (
                 <div
-                    key={item.name}
-                    className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105"
+                    key={index}
+                    className="p-4 border border-border rounded-[--radius-lg] bg-card"
                 >
-                    <div className="relative h-48">
-                        <Image
-                            src={`data:image/png;base64,${item.menuImage.b64_json}`}
-                            alt={item.name}
-                            layout="fill"
-                            objectFit="cover"
-                        />
-                    </div>
-                    <div className="p-4">
-                        <h3 className="text-lg font-semibold mb-1">
+                    <div className="flex flex-col h-full">
+                        <div className="relative w-full h-48 mb-4">
+                            {item.menuImage?.b64_json ? (
+                                <Image
+                                    src={`data:image/jpeg;base64,${item.menuImage.b64_json}`}
+                                    alt={item.name}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="rounded-[--radius]"
+                                />
+                            ) : (
+                                <div className="w-full h-full bg-muted rounded-[--radius] flex items-center justify-center">
+                                    No Image
+                                </div>
+                            )}
+                        </div>
+                        <h3 className="text-lg font-semibold mb-2">
                             {item.name}
                         </h3>
-                        <p className="text-gray-600 mb-2">{item.price}</p>
-                        <p className="text-sm text-gray-500 line-clamp-2">
+                        <p className="text-muted-foreground mb-2">
                             {item.description}
                         </p>
+                        <div className="mt-auto">
+                            <span className="text-primary font-medium">
+                                ${item.price}
+                            </span>
+                        </div>
                     </div>
                 </div>
             ))}
         </div>
     );
-}
+};
