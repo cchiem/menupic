@@ -55,9 +55,6 @@ export default function Home() {
             if (res.ok) {
                 setStatus("created");
                 setParsedMenu(json.menu);
-            } else {
-                setStatus("failed");
-                console.log(json.message);
             }
         } catch (error) {
             console.error("Error during upload or parsing:", error);
