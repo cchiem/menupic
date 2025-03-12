@@ -107,7 +107,11 @@ export default function Home() {
                     <div className="bg-card p-1.5 rounded-full shadow-sm">
                         <CiForkAndKnife className="h-6 w-6 text-primary" />
                     </div>
-                    <Link href="/" className="text-xl font-bold">
+                    <Link
+                        href="/"
+                        className="text-xl font-bold"
+                        onClick={() => window.location.reload()}
+                    >
                         SnapMenu
                     </Link>
                 </div>
