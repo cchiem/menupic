@@ -52,13 +52,13 @@ export default function Home() {
             });
 
             const json = await res.json();
-            if (json.success === "failed") {
-                setStatus("failed");
-                console.log(json.message);
-            } else {
+            if (res.ok) {
                 setStatus("created");
                 setParsedMenu(json.menu);
                 console.log(json.error.error.message);
+            } else {
+                setStatus("failed");
+                console.log(json.message);
             }
         } catch (error) {
             console.error("Error during upload or parsing:", error);

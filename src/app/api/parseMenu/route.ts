@@ -76,25 +76,24 @@ export async function POST(request: Request) {
         console.log({ menuItemsJSON });
     }
     // Create an array of promises for parallel image generation
-    try {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const imagePromises = menuItemsJSON.map(async (item: any) => {
-            console.log("processing image for:", item.name);
-            const response = await together.images.create({
-                prompt: `A picture of food for a menu, hyper realistic, highly detailed, ${item.name}, ${item.description}.`,
-                model: "black-forest-labs/FLUX.1-schnell",
-                width: 1024,
-                height: 768,
-                steps: 4,
-                response_format: "base64",
-            });
-            item.menuImage = response.data[0];
-            return item;
-        });
-        await Promise.all(imagePromises);
 
-        return Response.json({ success: "completed", menu: menuItemsJSON });
-    } catch (error) {
-        return Response.json({ success: "failed", message: error });
-    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const imagePromises = menuItemsJSON.map(async (item: any) => {
+        console.log("processing image for:", item.name);
+        const response = await together.images.create({
+            prompt: `A picture of food for a menu, hyper realistic, highly detailed, ${item.name}, ${item.description}.`,
+            model: "black-forest-labs/FLUX.1-schnell",
+            width: 1024,
+            height: 768,
+            steps: 4,
+            response_format: "base64",
+        });
+        item.menuImage = response.data[0];
+        return item;
+    });
+    await Promise.all(imagePromises);
+
+    return Response.json({ menu: menuItemsJSON });
 }
+
+export const maxDuration = 60; // for vercel timeout
