@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { Together } from "together-ai";
 import { z } from "zod";
 import zodToJsonSchema from "zod-to-json-schema";
@@ -78,6 +77,7 @@ export async function POST(request: Request) {
     }
     // Create an array of promises for parallel image generation
     try {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const imagePromises = menuItemsJSON.map(async (item: any) => {
             console.log("processing image for:", item.name);
             const response = await together.images.create({
