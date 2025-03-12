@@ -25,45 +25,6 @@ A web app that generates high-quality AI images for restaurant menu items from a
 
 <img src="./public/screenshot.png">
 
-## 🔧 Installation
-
-1. Clone the repository:
-
-    ```bash
-    git clone https://github.com/yourusername/ai-menu-visualizer.git
-    cd ai-menu-visualizer
-    ```
-
-2. Install dependencies:
-
-    ```bash
-    npm install
-    ```
-
-3. Set up AWS S3:
-
-    - Create an **S3 bucket** on AWS.
-    - Configure permissions for public access (or private with signed URLs).
-    - Get your **AWS Access Key ID** and **Secret Access Key**.
-
-4. Create a `.env.local` file and add your API keys:
-
-    ```env
-    TOGETHER_AI_API_KEY=your_api_key
-    AWS_ACCESS_KEY_ID=your_aws_access_key
-    AWS_SECRET_ACCESS_KEY=your_aws_secret_key
-    AWS_S3_BUCKET_NAME=your_bucket_name
-    AWS_REGION=your_aws_region
-    ```
-
-5. Start the development server:
-
-    ```bash
-    npm run dev
-    ```
-
-6. Open `http://localhost:3000` in your browser.
-
 ## 📜 Usage
 
 1. Upload an image of a restaurant menu.
