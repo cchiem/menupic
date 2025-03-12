@@ -85,7 +85,7 @@ export async function POST(request: Request) {
             model: "black-forest-labs/FLUX.1-schnell",
             width: 1024,
             height: 768,
-            steps: 4,
+            steps: 2,
             response_format: "base64",
         });
         item.menuImage = response.data[0];
