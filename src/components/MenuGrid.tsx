@@ -1,12 +1,12 @@
 import type React from "react";
-import type { MenuItem } from "@/app/page";
 import Image from "next/image";
+import { MenuItem, SampleMenuItem } from "@/lib/types";
 
 interface MenuGridProps {
-    items: MenuItem[];
+    items: (MenuItem | SampleMenuItem)[];
 }
 
-export const MenuGrid: React.FC<MenuGridProps> = ({ items }) => {
+export const MenuGrid = ({ items }: MenuGridProps) => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {items.map((item, index) => (
@@ -16,7 +16,8 @@ export const MenuGrid: React.FC<MenuGridProps> = ({ items }) => {
                 >
                     <div className="flex flex-col h-full">
                         <div className="relative w-full h-48 mb-4">
-                            {item.menuImage?.b64_json ? (
+                            {typeof item.menuImage === "object" &&
+                            "b64_json" in item.menuImage ? (
                                 <Image
                                     src={`data:image/jpeg;base64,${item.menuImage.b64_json}`}
                                     alt={item.name}
@@ -25,9 +26,13 @@ export const MenuGrid: React.FC<MenuGridProps> = ({ items }) => {
                                     className="rounded-[--radius]"
                                 />
                             ) : (
-                                <div className="w-full h-full bg-muted rounded-[--radius] flex items-center justify-center">
-                                    No Image
-                                </div>
+                                <Image
+                                    src={item.menuImage as string}
+                                    alt={item.name}
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="rounded-[--radius]"
+                                />
                             )}
                         </div>
                         <h3 className="text-lg font-semibold mb-2">

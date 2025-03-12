@@ -16,15 +16,9 @@ import {
 } from "lucide-react";
 import { BiLogoLinkedin } from "react-icons/bi";
 import { CiForkAndKnife } from "react-icons/ci";
-
-export interface MenuItem {
-    name: string;
-    price: string;
-    description: string;
-    menuImage: {
-        b64_json: string;
-    };
-}
+import { sampleMenuURL, sampleParsedMenu } from "@/lib/constants";
+import { MenuItem, SampleMenuItem } from "@/lib/types";
+import Link from "next/link";
 
 export default function Home() {
     const { uploadToS3 } = useS3Upload();
@@ -32,7 +26,9 @@ export default function Home() {
     const [status, setStatus] = useState<
         "initial" | "uploading" | "parsing" | "created" | "failed"
     >("initial");
-    const [parsedMenu, setParsedMenu] = useState<MenuItem[]>([]);
+    const [parsedMenu, setParsedMenu] = useState<(MenuItem | SampleMenuItem)[]>(
+        []
+    );
 
     const handleFileChange = async (file: File) => {
         const objectUrl = URL.createObjectURL(file);
@@ -60,6 +56,15 @@ export default function Home() {
             console.error("Error during upload or parsing:", error);
             setStatus("failed");
         }
+    };
+
+    const handleExample = async () => {
+        setMenuUrl(sampleMenuURL);
+        setStatus("uploading");
+        setStatus("parsing");
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        setStatus("created");
+        setParsedMenu(sampleParsedMenu);
     };
 
     return (
@@ -102,7 +107,9 @@ export default function Home() {
                     <div className="bg-card p-1.5 rounded-full shadow-sm">
                         <CiForkAndKnife className="h-6 w-6 text-primary" />
                     </div>
-                    <h1 className="text-xl font-bold">SnapMenu</h1>
+                    <Link href="/" className="text-xl font-bold">
+                        SnapMenu
+                    </Link>
                 </div>
 
                 {/* Social Links */}
@@ -148,58 +155,66 @@ export default function Home() {
 
                 <div className="max-w-2xl mx-auto mb-10">
                     {status === "initial" && (
-                        <Dropzone
-                            accept={{
-                                "image/*": [".jpg", ".jpeg", ".png"],
-                            }}
-                            multiple={false}
-                            onDrop={(acceptedFiles) =>
-                                handleFileChange(acceptedFiles[0])
-                            }
-                            minSize={1024}
-                            maxSize={3072000}
-                        >
-                            {({
-                                getRootProps,
-                                getInputProps,
-                                isDragAccept,
-                            }) => (
-                                <div
-                                    className={`border-2 border-dashed p-8 rounded-[2rem] flex flex-col items-center justify-center transition-all shadow-lg bg-card/80 backdrop-blur-sm ${
-                                        isDragAccept
-                                            ? "border-primary bg-primary/5"
-                                            : "border-border"
-                                    }`}
-                                    {...getRootProps()}
-                                >
-                                    <input {...getInputProps()} />
+                        <div className="flex flex-col">
+                            <Dropzone
+                                accept={{
+                                    "image/*": [".jpg", ".jpeg", ".png"],
+                                }}
+                                multiple={false}
+                                onDrop={(acceptedFiles) =>
+                                    handleFileChange(acceptedFiles[0])
+                                }
+                                minSize={1024}
+                                maxSize={3072000}
+                            >
+                                {({
+                                    getRootProps,
+                                    getInputProps,
+                                    isDragAccept,
+                                }) => (
+                                    <div
+                                        className={`border-2 border-dashed p-8 rounded-[2rem] flex flex-col items-center justify-center transition-all shadow-lg bg-card/80 backdrop-blur-sm ${
+                                            isDragAccept
+                                                ? "border-primary bg-primary/5"
+                                                : "border-border"
+                                        }`}
+                                        {...getRootProps()}
+                                    >
+                                        <input {...getInputProps()} />
 
-                                    <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mb-6 shadow-inner">
-                                        <ImageIcon className="h-10 w-10 text-muted-foreground" />
+                                        <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center mb-6 shadow-inner">
+                                            <ImageIcon className="h-10 w-10 text-muted-foreground" />
+                                        </div>
+
+                                        <h3 className="text-xl font-medium mb-2">
+                                            Upload your menu
+                                        </h3>
+                                        <p className="text-muted-foreground mb-6 text-center max-w-md">
+                                            Drag and drop your menu image here,
+                                            or use one of the options below
+                                        </p>
+
+                                        <div className="flex flex-wrap gap-3 justify-center">
+                                            <button className="flex items-center gap-2 px-4 py-2 rounded-[--radius-xl] bg-primary text-primary-foreground font-medium hover:bg-primary/90 shadow-md transition-all">
+                                                <Upload className="h-4 w-4" />
+                                                <span>Upload Image</span>
+                                            </button>
+
+                                            <button className="flex items-center gap-2 px-4 py-2 rounded-[--radius-xl] border border-border bg-card text-foreground font-medium hover:bg-secondary shadow-md transition-all">
+                                                <Camera className="h-4 w-4" />
+                                                <span>Take a Picture</span>
+                                            </button>
+                                        </div>
                                     </div>
-
-                                    <h3 className="text-xl font-medium mb-2">
-                                        Upload your menu
-                                    </h3>
-                                    <p className="text-muted-foreground mb-6 text-center max-w-md">
-                                        Drag and drop your menu image here, or
-                                        use one of the options below
-                                    </p>
-
-                                    <div className="flex flex-wrap gap-3 justify-center">
-                                        <button className="flex items-center gap-2 px-4 py-2 rounded-[--radius-xl] bg-primary text-primary-foreground font-medium hover:bg-primary/90 shadow-md transition-all">
-                                            <Upload className="h-4 w-4" />
-                                            <span>Upload Image</span>
-                                        </button>
-
-                                        <button className="flex items-center gap-2 px-4 py-2 rounded-[--radius-xl] border border-border bg-card text-foreground font-medium hover:bg-secondary shadow-md transition-all">
-                                            <Camera className="h-4 w-4" />
-                                            <span>Take a Picture</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-                        </Dropzone>
+                                )}
+                            </Dropzone>
+                            <button
+                                onClick={handleExample}
+                                className="opacity-80 hover:underline hover:opacity-100 hover:cursor-pointer text-blue-400 pt-4"
+                            >
+                                Try out an Example Menu?
+                            </button>
+                        </div>
                     )}
 
                     {menuUrl && status !== "initial" && (
