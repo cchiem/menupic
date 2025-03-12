@@ -2,7 +2,7 @@
 
 <img src="./public/image.png">
 
-A web app that generates high-quality AI images for restaurant menu items from a simple photo of the menu.
+A web app that generates AI images for restaurant menu items from a photo of the menu.
 
 ## 🛠 Tech Stack
 
