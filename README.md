@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Menu Visualizer
 
-## Getting Started
+<img src="./public/image.png">
 
-First, run the development server:
+A web app that generates high-quality AI images for restaurant menu items from a simple photo of the menu.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-   📸 Upload an image of a restaurant menu
+-   🔍 Extract menu items using **Llama 3.2 Vision 90B** (Together AI)
+-   📄 Convert extracted text into structured JSON using **Llama 3.1 8B** (Together AI)
+-   🎨 Generate realistic dish images with **Flux Schnell** (Together AI)
+-   ☁️ Store generated images securely in **AWS S3**
+-   🌐 Built with **Next.js (TypeScript), Shadcn, and Tailwind CSS** for a modern UI
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠 Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+-   **Frontend:** React, Next.js, TypeScript, Shadcn, Tailwind CSS
+-   **AI Models:** Llama 3.2 Vision 90B, Llama 3.1 8B, Flux Schnell (Together AI)
+-   **Storage:** AWS S3 for image storage
+-   **Backend:** Next.js API routes (for AI requests & S3 integration)
+-   **Hosting:** (Add if deployed, e.g., Vercel, AWS, etc.)
 
-## Learn More
+## 📸 Demo
 
-To learn more about Next.js, take a look at the following resources:
+<img src="./public/screenshot.png">
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔧 Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Clone the repository:
 
-## Deploy on Vercel
+    ```bash
+    git clone https://github.com/yourusername/ai-menu-visualizer.git
+    cd ai-menu-visualizer
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Install dependencies:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    ```bash
+    npm install
+    ```
+
+3. Set up AWS S3:
+
+    - Create an **S3 bucket** on AWS.
+    - Configure permissions for public access (or private with signed URLs).
+    - Get your **AWS Access Key ID** and **Secret Access Key**.
+
+4. Create a `.env.local` file and add your API keys:
+
+    ```env
+    TOGETHER_AI_API_KEY=your_api_key
+    AWS_ACCESS_KEY_ID=your_aws_access_key
+    AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+    AWS_S3_BUCKET_NAME=your_bucket_name
+    AWS_REGION=your_aws_region
+    ```
+
+5. Start the development server:
+
+    ```bash
+    npm run dev
+    ```
+
+6. Open `http://localhost:3000` in your browser.
+
+## 📜 Usage
+
+1. Upload an image of a restaurant menu.
+2. The app extracts menu items and converts them into structured JSON.
+3. AI generates high-quality images for each dish.
+4. Generated images are stored in **AWS S3**.
+5. View, share, or download the AI-generated images.
+
+## ☁️ AWS S3 Integration
+
+-   **Uploading Images:** The app uploads generated images to S3 using AWS SDK.
+-   **Retrieving Images:** The frontend fetches images via **pre-signed URLs** for security.
+-   **Storage Strategy:** Each menu gets a unique folder inside the S3 bucket.
