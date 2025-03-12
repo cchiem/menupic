@@ -19,7 +19,7 @@ A web app that generates high-quality AI images for restaurant menu items from a
 -   **AI Models:** Llama 3.2 Vision 90B, Llama 3.1 8B, Flux Schnell (Together AI)
 -   **Storage:** AWS S3 for image storage
 -   **Backend:** Next.js API routes (for AI requests & S3 integration)
--   **Hosting:** (Add if deployed, e.g., Vercel, AWS, etc.)
+-   **Hosting:** Vercel
 
 ## 📸 Demo
 
