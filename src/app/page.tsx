@@ -55,7 +55,6 @@ export default function Home() {
             if (res.ok) {
                 setStatus("created");
                 setParsedMenu(json.menu);
-                console.log(json.error.error.message);
             } else {
                 setStatus("failed");
                 console.log(json.message);
